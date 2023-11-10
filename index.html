@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    <title>登录页</title>
+    <link rel="stylesheet" href="./module/layui/css/layui.css">
+    <link rel="stylesheet" href="./res/css/style.css">
+
+</head>
+<body class="login-body">
+
+<div class="login-main">
+    <header class="layui-elip layui-font-blue"><b>前端测试</b></header>
+    <form class="layui-form">
+        <table>
+            <tr  class="layui-input-inline">
+                <td width="10px"><label  class="layui-icon layui-col-lg-offset1" for ="account">&#xe66f;</label></td>
+                <td width="330px"> <input type="text" name="account" id="account" required lay-verify="required" placeholder="用户名" autocomplete="off"
+                            class="layui-input layui-col-lg-offset1"></td>
+            </tr>
+            <tr  class="layui-input-inline">
+                <td width="10px"> <label  class="layui-icon layui-col-lg-offset1" for="password">&#xe673;</label></td>
+                <td width="330px"><input type="password" id="password" name="password" required lay-verify="required" placeholder="密码" autocomplete="off"
+                                         class="layui-input layui-col-lg-offset1"></td>
+            </tr>
+        </table>
+        <div class="layui-input-inline login-btn">
+            <button lay-submit lay-filter="login" class="layui-btn layui-icon">&#xe628;&nbsp;登录</button>
+        </div>
+        <hr/>
+    </form>
+</div>
+
+
+<script src="./module/layui/layui.js"></script>
+<script type="text/javascript">
+    layui.use(['form','layer','jquery'], function () {
+        // 操作对象
+        var form = layui.form;
+        var $ = layui.jquery;
+        form.on('submit(login)',function (data) {
+            //console.log(data.field);
+            $.ajax({
+                url:'http://10.161.52.200:9999/demo',
+                data:data.field,
+                dataType:'json',
+                type:'post',
+                success:function (data) {
+                    if (data.code == 200){
+                        layer.msg('登录成功');
+                        // location.href = "../index.php";
+                    }else{
+                        layer.msg('登录名或密码错误');
+                    }
+                }
+            })
+            return false;
+        })
+    });
+</script>
+</body>
+</html>
